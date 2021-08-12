@@ -98,16 +98,16 @@ export async function showLocation(options) {
       // Always using universal URL instead of URI scheme since the latter doesn't support all parameters (#155)
       url = 'https://www.google.com/maps/dir/?api=1';
 
-      const fromAddressQuery = fromAddress ? encodeURI(fromAddress) : ''
-      const toAddressQuery = toAddress ? encodeURI(toAddress) : ''
+      const fromAddressGoogleQuery = fromAddress ? encodeURI(fromAddress) : ''
+      const toAddressGoogleQuery = toAddress ? encodeURI(toAddress) : ''
 
       if (useSourceDestiny) {
-        url += `&origin=${fromAddressQuery || sourceLatLng}`;
+        url += `&origin=${fromAddressGoogleQuery || sourceLatLng}`;
       }
       if (!options.googleForceLatLon && title) {
-        url += `&destination=${toAddressQuery || encodedTitle}`;
+        url += `&destination=${toAddressGoogleQuery || encodedTitle}`;
       } else {
-        url += `&destination=${toAddressQuery || latlng}`;
+        url += `&destination=${toAddressGoogleQuery || latlng}`;
       }
 
       url += options.googlePlaceId
@@ -227,7 +227,7 @@ export async function showLocation(options) {
       const toAddressQuery = toAddress ? `|${toAddress}` : ''
       const fromAddressQuery = fromAddress ? `|${fromAddress}` : ''
 
-      url = `${prefixes.dgis}routeSearch/from/${lng},${lat}|${toAddressQuery}/go`;
+      url = `${prefixes.dgis}routeSearch/to/${lng},${lat}|${toAddressQuery}/go`;
 
       if (useSourceDestiny) {
         url = `${prefixes.dgis}routeSearch/to/${lng},${lat}|${toAddressQuery}/from/${sourceLng},${sourceLat}|${fromAddressQuery}/go`;

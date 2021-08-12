@@ -19,6 +19,7 @@ interface Options {
   appsWhiteList?: string[];
   appTitles?: {[key: string]: string};
   naverCallerName?: string;
+  tintColor: string | undefined;
 }
 
 interface PopupStyleProp {
