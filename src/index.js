@@ -21,14 +21,14 @@ import {askAppChoice, checkOptions} from './utils';
  *     googleForceLatLon: boolean | undefined | null,
  *     googlePlaceId: number | undefined | null,
  *     title: string | undefined | null,
- *     app: string | undefined | null
- *     dialogTitle: string | undefined | null
- *     dialogMessage: string | undefined | null
- *     cancelText: string | undefined | null
- *     appsWhiteList: array | undefined | null
- *     appTitles: object | undefined | null
- *     naverCallerName: string | undefined
- *      
+ *     app: string | undefined | null,
+ *     dialogTitle: string | undefined | null,
+ *     dialogMessage: string | undefined | null,
+ *     cancelText: string | undefined | null,
+ *     appsWhiteList: array | undefined | null,
+ *     appTitles: object | undefined | null,
+ *     naverCallerName: string | undefined,
+ *     tintColor: string | undefined
  * }} options
  */
 export async function showLocation(options) {
@@ -81,6 +81,7 @@ export async function showLocation(options) {
       appsWhiteList,
       prefixes,
       appTitles: generateTitles(options.appTitles),
+      tintColor: options.tintColor
     });
   }
 
