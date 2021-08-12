@@ -97,13 +97,17 @@ export async function showLocation(options) {
     case 'google-maps':
       // Always using universal URL instead of URI scheme since the latter doesn't support all parameters (#155)
       url = 'https://www.google.com/maps/dir/?api=1';
+
+      const fromAddressGoogleQuery = fromAddress ? encodeURI(fromAddress) : ''
+      const toAddressGoogleQuery = toAddress ? encodeURI(toAddress) : ''
+
       if (useSourceDestiny) {
-        url += `&origin=${sourceLatLng}`;
+        url += `&origin=${fromAddressGoogleQuery || sourceLatLng}`;
       }
       if (!options.googleForceLatLon && title) {
-        url += `&destination=${encodedTitle}`;
+        url += `&destination=${toAddressGoogleQuery || encodedTitle}`;
       } else {
-        url += `&destination=${latlng}`;
+        url += `&destination=${toAddressGoogleQuery || latlng}`;
       }
 
       url += options.googlePlaceId
@@ -220,10 +224,13 @@ export async function showLocation(options) {
       }
       break;
     case 'dgis':
-      url = `${prefixes.dgis}routeSearch/to/${lng},${lat}|${toAddress}/go`;
+      const toAddressQuery = toAddress ? `|${toAddress}` : ''
+      const fromAddressQuery = fromAddress ? `|${fromAddress}` : ''
+
+      url = `${prefixes.dgis}routeSearch/to/${lng},${lat}|${toAddressQuery}/go`;
 
       if (useSourceDestiny) {
-        url = `${prefixes.dgis}routeSearch/to/${lng},${lat}|${toAddress}/from/${sourceLng},${sourceLat}|${fromAddress}/go`;
+        url = `${prefixes.dgis}routeSearch/to/${lng},${lat}|${toAddressQuery}/from/${sourceLng},${sourceLat}|${fromAddressQuery}/go`;
       }
       break;
     case 'liftago':
