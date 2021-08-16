@@ -98,12 +98,11 @@ export async function showLocation(options) {
     case 'google-maps':
       // Always using universal URL instead of URI scheme since the latter doesn't support all parameters (#155)
       url = 'https://www.google.com/maps/dir/?api=1';
-
-      const fromAddressGoogleQuery = fromAddress ? encodeURI(fromAddress) : ''
+       
       const toAddressGoogleQuery = toAddress ? encodeURI(toAddress) : ''
 
       if (useSourceDestiny) {
-        url += `&origin=${fromAddressGoogleQuery || sourceLatLng}`;
+        url += `&origin=${sourceLatLng}`;
       }
       if (!options.googleForceLatLon && title) {
         url += `&destination=${toAddressGoogleQuery || encodedTitle}`;
@@ -185,8 +184,13 @@ export async function showLocation(options) {
       }
       break;
     case 'yandex-taxi':
+      if  (useSourceDestiny) { 
+        url = `${prefixes['yandex-taxi']}route?start-lat=${sourceLat}&end-lat=${lat}&start-lon=${sourceLng}&end-lon=${lng}&appmetrica_tracking_id=1178268795219780156`;
+        break;
+      } 
+      
       url = `${prefixes['yandex-taxi']}route?end-lat=${lat}&end-lon=${lng}&appmetrica_tracking_id=1178268795219780156`;
-
+    
       break;
     case 'yandex-maps':
       url = `${prefixes['yandex-maps']}?pt=${lng},${lat}`;
